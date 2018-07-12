@@ -28,13 +28,22 @@ def askdata
   e = gets.chomp.to_i
   puts 'Comuna?'
   c = gets.chomp
-  puts 'Género?'
+  puts 'Género M/F?'
   g = gets.chomp
   { edad: e, comuna: c, genero: g }
 end
 r = 0
 until r == 10
-  print 'ingrese opcion:'
+  puts 'ingrese opcion:
+  1) ingrese
+  2) edite
+  3) eliminar
+  4) size
+  5) comunas
+  6) nombre si 20 => edad <=25
+  7) sum(edad)
+  8) promedio(edad)
+  9) listas genero'
   r = gets.chomp.to_i
   n = 'void'
   if r < 4
@@ -68,6 +77,36 @@ until r == 10
     else
       puts 'aweonao no existe para eliminar'
     end
+  when 4
+    puts curso.size
+  when 5
+    curso.each { |k, v| puts v[:comuna] }
+  when 6
+    curso.each { |k, v| puts k if (v[:edad] >= 20) and (v[:edad] <= 25) }
+  when 7 # sum(edad)
+    sum = 0
+    curso.each { |k, v| sum += v[:edad] }
+    puts "suma edades es #{sum}"
+  when 8 # promedio(edad)
+    sum = 0
+    curso.each { |k, v| sum += v[:edad] }
+    puts "promedio edades es #{sum/curso.size}"
+  when 9 # listas genero'
+    f = []
+    m = []
+    x = []
+    curso.each do |k, v|
+      g = v[:genero]
+      case g
+      when 'f'
+        f.push(g)
+      when 'm'
+        m.push(g)
+      else
+        x.push(g)
+      end
+    end
+    puts "generos f=#{f} m=#{m} x=#{x}"
   else
     puts "You gave me #{r} -- I have no idea what to do with that."
   end
