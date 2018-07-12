@@ -6,50 +6,47 @@ puts 'Comuna'
 puts 'Género'
 puts '3. Opción 2: Permite editar los datos de la persona.'
 puts '4. Opción 3: Permite eliminar una persona.'
-curso = Hash.new { }
+curso = Hash.new {}
 puts curso
 
-while false do
+def askdata()
+  puts 'Edad?'
+  e = gets.chomp.to_i
+  puts 'Comuna?'
+  c = gets.chomp
+  puts 'Género?'
+  g = gets.chomp
+  [e, c, g]
+end
+
+while true do
   print 'ingrese opcion:'
-  r = gets.chomp
+  r = gets.chomp.to_i
+
+  puts 'Nombre?'
+  n = gets.chomp
 
   case r
   when 1
-    puts 'Nombre?'
-    n = gets.chomp
-    puts 'Edad?'
-    e = gets.chomp.to_i
-    puts 'Comuna?'
-    c = gets.chomp
-    puts 'Género?'
-    g = gets.chomp
-    unless curso.key? n.to_sym do
-      puts "Se agrega #{n} #{e} #{c} #{g}"
-      curso[n.to_sum] = [e, c, g]
+    unless curso.key? n.to_sym
+      arr = askdata()
+      puts "Se agrega #{n} #{arr}"
+      curso[n.to_sym] = arr
     else
       puts "aweonao si quieres modificar 2"
     end
     puts curso
   when 2
-    puts 'Nombre?'
-    n = gets.chomp
-    puts 'Edad?'
-    e = gets.chomp.to_i
-    puts 'Comuna?'
-    c = gets.chomp
-    puts 'Género?'
-    g = gets.chomp
-    if curso.key? n.to_sym do
-      puts "Se modifica #{n} #{e} #{c} #{g}"
-      curso[n.to_sum] = [e, c, g]
+    if curso.key? n.to_sym
+      arr = askdata()
+      puts "Se modifica #{n} #{arr}"
+      curso[n.to_sym] = arr
     else
       puts "aweonao si quieres agregar 1"
     end
     puts curso
   when 3
-    puts 'Nombre?'
-    n = gets.chomp
-    if curso.key? n.to_sym do
+    if curso.key? n.to_sym
       puts "Se borra #{n} #{curso[n]}"
       curso.delete(n.to_sym)
     else
