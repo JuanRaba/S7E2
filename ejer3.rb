@@ -20,21 +20,26 @@ puts '10. Opción 9: Muestra dos listas de personas, una por cada género.'
 puts '11. El menú debe repetirse hasta que el usuario ingrese la opción
 10 (salir).'
 
-curso = Hash.new {}
+curso = []
 puts curso
 
 def askdata
+  puts 'Nombre?'
+  n = gets.chomp
   puts 'Edad?'
   e = gets.chomp.to_i
   puts 'Comuna?'
   c = gets.chomp
   puts 'Género M/F?'
   g = gets.chomp
-  { edad: e, comuna: c, genero: g }
+  { nombre: n, edad: e, comuna: c, genero: g }
 end
 r = 0
 until r == 10
-  puts 'ingrese opcion:
+  puts '
+
+
+  ingrese opcion:
   1) ingrese
   2) edite
   3) eliminar
@@ -45,68 +50,51 @@ until r == 10
   8) promedio(edad)
   9) listas genero'
   r = gets.chomp.to_i
-  n = 'void'
-  if r < 4
-    puts 'Nombre?'
-    n = gets.chomp
-  end
 
   case r
   when 1
-    if curso.key? n.to_sym
-      puts 'aweonao si quieres modificar 2'
-    else
-      hash = askdata
-      puts "Se agrega #{n} #{hash}"
-      curso[n.to_sym] = hash
-    end
-    puts curso
+    hash = askdata
+    puts "Se agrega #{hash}"
+    curso.push hash # warning duplicates
   when 2
-    if curso.key? n.to_sym
-      hash = askdata
-      puts "Se modifica #{n} #{hash}"
-      curso[n.to_sym] = hash
+    puts curso
+    # need ask the user to get the index
+    puts 'que numero es en la lista? (cuenta desde +1 como las personas)'
+    n = gets.chomp.to_i
+    # need check if num is correct
+    hash = askdata
+    if (n <= curso.size + 1) && (n > 0)
+      puts "Se modifica #{curso[n - 1]} por #{hash}"
+      curso[n - 1] = hash
     else
-      puts 'aweonao si quieres agregar 1'
+      puts 'no hay tantos... :0)'
     end
     puts curso
   when 3
-    if curso.key? n.to_sym
-      puts "Se borra #{n} #{curso[n]}"
-      curso.delete(n.to_sym)
-    else
-      puts 'aweonao no existe para eliminar'
-    end
+    puts curso
+    # need ask the user to get the index
+    puts 'que numero es en la lista? (cuenta desde +1 como las personas)'
+    n = gets.chomp.to_i
+    # need check if num is correct?
+    curso.delete_at(n - 1)
+    # what about fragmentation of the array? .. RUBY MAGIC!
+    puts curso
   when 4
-    puts curso.size
+    puts "hay #{curso.size}"
   when 5
-    curso.each { |k, v| puts v[:comuna] }
+    curso.each { |v| puts v[:comuna] }
   when 6
-    curso.each { |k, v| puts k if (v[:edad] >= 20) and (v[:edad] <= 25) }
-  when 7 # sum(edad)
-    sum = 0
-    curso.each { |k, v| sum += v[:edad] }
+    curso.each { |v| puts k if (v[:edad] >= 20) && (v[:edad] <= 25) }
+  when 7 # sum(edad)0
+    sum = curso.inject(0) { |mem, v| mem + v[:edad] }
     puts "suma edades es #{sum}"
   when 8 # promedio(edad)
-    sum = 0
-    curso.each { |k, v| sum += v[:edad] }
-    puts "promedio edades es #{sum/curso.size}"
+    sum = curso.inject(0) { |mem, v| mem + v[:edad] }
+    puts "promedio edades es #{sum / curso.size}"
   when 9 # listas genero'
-    f = []
-    m = []
-    x = []
-    curso.each do |k, v|
-      g = v[:genero]
-      case g
-      when 'f'
-        f.push(g)
-      when 'm'
-        m.push(g)
-      else
-        x.push(g)
-      end
-    end
-    puts "generos f=#{f} m=#{m} x=#{x}"
+    # sorry lgtb
+    list = curso.group_by { |v| v[:genero] == 'f' }
+    puts "generos f y no f #{list}}"
   else
     puts "You gave me #{r} -- I have no idea what to do with that."
   end

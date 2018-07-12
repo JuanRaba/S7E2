@@ -88,10 +88,13 @@ until r == 10
     curso.each { |k, v| sum += v[:edad] }
     puts "suma edades es #{sum}"
   when 8 # promedio(edad)
+    # maybe with map we can get a array of the hash values and inject it
     sum = 0
     curso.each { |k, v| sum += v[:edad] }
     puts "promedio edades es #{sum/curso.size}"
   when 9 # listas genero'
+    # maybe with map we can get a array of the hash values and inject it
+    # and make lgtb decide
     f = []
     m = []
     x = []
