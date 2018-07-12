@@ -16,7 +16,7 @@ def askdata()
   c = gets.chomp
   puts 'Género?'
   g = gets.chomp
-  [e, c, g]
+  {edad:e, comuna:c, genero:g}
 end
 
 while true do
@@ -29,18 +29,18 @@ while true do
   case r
   when 1
     unless curso.key? n.to_sym
-      arr = askdata()
-      puts "Se agrega #{n} #{arr}"
-      curso[n.to_sym] = arr
+      hash = askdata()
+      puts "Se agrega #{n} #{hash}"
+      curso[n.to_sym] = hash
     else
       puts "aweonao si quieres modificar 2"
     end
     puts curso
   when 2
     if curso.key? n.to_sym
-      arr = askdata()
-      puts "Se modifica #{n} #{arr}"
-      curso[n.to_sym] = arr
+      hash = askdata()
+      puts "Se modifica #{n} #{hash}"
+      curso[n.to_sym] = hash
     else
       puts "aweonao si quieres agregar 1"
     end
